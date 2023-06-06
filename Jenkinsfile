@@ -47,7 +47,7 @@ pipeline {
           sh "aws eks --region us-east-1 update-kubeconfig --name ${cluster_name}"
           script {
             try {
-              sh "kubectle create namespace ${namespace}"
+              sh "kubectl create namespace ${namespace}"
             }
             catch (Exception e) {
               echo "Error / namespace is already created"
