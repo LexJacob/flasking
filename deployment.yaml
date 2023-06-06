@@ -1,14 +1,14 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name:  flaskcontainer 
+  name:  lexeljacobflaskcontainer
   namespace: lexeljacob 
   labels: 
-    app:  flaskcontainer 
+    app:  lexeljacobflaskcontainer
 spec: 
   selector: 
     matchLabels: 
-      app: flaskcontainer 
+      app: lexeljacobflaskcontainer
   replicas: 1 
   strategy: 
     rollingUpdate: 
@@ -18,10 +18,10 @@ spec:
   template: 
     metadata: 
       labels: 
-        app:  flaskcontainer 
+        app:  lexeljacobflaskcontainer
     spec: 
       containers: 
-      - name:  flaskcontainer 
+      - name:  lexeljacobflaskcontainer
         image:  lexeljacob/flask_app 
         resources: 
           requests: 
@@ -32,7 +32,7 @@ spec:
             memory: 100Mi 
         ports: 
         - containerPort:  5000 
-          name:  flaskcontainer 
+          name:  lexeljacobflaskcontainer
         imagePullPolicy: Always 
       restartPolicy: Always 
  
@@ -40,18 +40,18 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: flaskcontainer 
+  name: lexeljacobflaskcontainer
   namespace: lexeljacob 
 spec: 
   selector: 
-    app: flaskcontainer 
+    app: lexeljacobflaskcontainer
   type: LoadBalancer 
   sessionAffinity: None 
   sessionAffinityConfig: 
     clientIP: 
       timeoutSeconds: 10800 
   ports: 
-  - name: flaskcontainer 
+  - name: lexeljacobflaskcontainer
     protocol: TCP 
     port: 80 
     targetPort: 5000 
