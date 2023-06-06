@@ -1,10 +1,18 @@
 pipeline {
+
+  environment {
+    registry = "lexeljacob/flask_app"
+    registryCredentials = "docker"
+    cluster_name = "skillstorm"
+  }
+
   agent {
     node {
       label 'docker'
     }
 
   }
+
   stages {
     stage('Git') {
       steps {
@@ -12,23 +20,26 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('Build Stage') {
       steps {
-        sh 'docker build -t lexeljacob/flask_app .'
+        script {
+          dockerImage = docker.build(registry)
+        }
       }
     }
 
-    stage('Docker Login') {
+    stage('Deployment Stage') {
       steps {
-        sh 'docker login -u lexeljacob -p dckr_pat_s03HfbbIHnoXkljKqTznZHN_5Rs'
+        script {
+          docker.withRegistry('', registryCredentials) {
+            dockerImage.push()
+          }
+        }
       }
-    }
-
-    stage('Docker Push') {
-      steps {
-        sh 'docker push lexeljacob/flask_app'
-      }
+      
     }
 
   }
+
+
 }
