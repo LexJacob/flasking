@@ -1,14 +1,14 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name:  lexeljacobflaskcontainer
+  name:  lexeljacobflask
   namespace: lexeljacob 
   labels: 
-    app:  lexeljacobflaskcontainer
+    app:  lexeljacobflask
 spec: 
   selector: 
     matchLabels: 
-      app: lexeljacobflaskcontainer
+      app: lexeljacobflask
   replicas: 1 
   strategy: 
     rollingUpdate: 
@@ -18,10 +18,10 @@ spec:
   template: 
     metadata: 
       labels: 
-        app:  lexeljacobflaskcontainer
+        app:  lexeljacobflask
     spec: 
       containers: 
-      - name:  lexeljacobflaskcontainer
+      - name:  lexeljacobflask
         image:  lexeljacob/flask_app 
         resources: 
           requests: 
@@ -32,7 +32,7 @@ spec:
             memory: 100Mi 
         ports: 
         - containerPort:  5000 
-          name:  lexeljacobflaskcontainer
+          name:  lexeljacobflask
         imagePullPolicy: Always 
       restartPolicy: Always 
  
@@ -40,18 +40,18 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: lexeljacobflaskcontainer
+  name: lexeljacobflask
   namespace: lexeljacob 
 spec: 
   selector: 
-    app: lexeljacobflaskcontainer
+    app: lexeljacobflask
   type: LoadBalancer 
   sessionAffinity: None 
   sessionAffinityConfig: 
     clientIP: 
       timeoutSeconds: 10800 
   ports: 
-  - name: lexeljacobflaskcontainer
+  - name: lexeljacobflask
     protocol: TCP 
     port: 80 
     targetPort: 5000 
